@@ -1,0 +1,28 @@
+services:
+  backend:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile.backend
+    ports:
+      - "3001:3001"
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  mongo:
+    volumes:
+      - slack_mongo:/data/mongo
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+
+volumes:
+  slack_mongo:
