@@ -1,0 +1,19 @@
+.num1 {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    top: 50px;
+  }
+  
+  .num1 div {
+    /* Optional: Add styling for individual items */
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+  }
+
+.format{
+  margin-top: 80px;
+}
