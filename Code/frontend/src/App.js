@@ -5,13 +5,15 @@ import Home from './Pages/Home';
 import Contact from './Pages/Contact';
 import Items from './Pages/Items';
 import Basket from './Pages/Basket';
+import Login from './Pages/login';
 import NoPage from './Pages/NoPage';
+import Client from './Pages/Client';
 import Axios from 'axios'
 
 export default function App() {
   const [listofItems, setListOfItems] = useState([]);
   useEffect(() => {
-    Axios.get("http://localhost:3001/getDrinks").then((response) => {
+    Axios.get("http://localhost:3001/items").then((response) => {
       setListOfItems(response.data);
     });
   }, []);
@@ -21,7 +23,9 @@ export default function App() {
     <div>
         <BrowserRouter>
           <Routes>
-            <Route index element={<Home />} />
+            <Route index element={<Login />} />
+            <Route path='/Home' element={<Home />} />
+            <Route path='/Client' element={<Client />} />
             <Route path='/Contact' element={<Contact />} />
             <Route path='/Item' element={<Items />} />
             <Route path='/Basket' element={<Basket />} />

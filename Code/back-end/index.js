@@ -1,85 +1,76 @@
-
-const express = require("express");
-const app = express();
+const express = require('express');
 const mongoose = require('mongoose');
-const DrinksModel = require('./models/drinks');
-const BasketModel = require('./models/basket');
-//const http = require('http');
-//const socketIO = require('socket.io');
-//const server = http.createServer(app);
-//const io = socketIO(server);
-const http = require("http");
-const { Server } = require("socket.io");
-const cors = require("cors");
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
+const app = express();
+const PORT = 3001;
 app.use(cors());
+app.use(bodyParser.json());
 
-const server = http.createServer(app);
-
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
+mongoose.connect("mongodb+srv://alexw123456w:JFeU7ne3L4adSigl@cluster0.2gorhjl.mongodb.net/Drinksdb", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 
-mongoose.connect("mongodb+srv://alexw123456w:JFeU7ne3L4adSigl@cluster0.2gorhjl.mongodb.net/Drinksdb");
-
-//drink
-app.get("/getDrinks", (req, res) => {
-    DrinksModel.find()
-        .then((result) => {
-            res.status(200).json(result);
-        })
-        .catch((error) => {
-            res.status(500).json(error)
-        })
+const Schema = mongoose.Schema;
+const itemSchema = new Schema({
+  Name: String,
+  Description: String,
+  Cost: Number,
 });
 
-app.post("/createDrink", async (req, res) => {
-    const drink = req.body
-    const newDrink = new DrinksModel(drink);
-    await newDrink.save();
+const Item = mongoose.model('Item', itemSchema);
 
-    res.json(drink);
-
+app.get('/items', async (req, res) => {
+  try {
+    const items = await Item.find();
+    res.json(items);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
-//basket
-app.get("/getBasket", (req, res) => {
-    BasketModel.find()
-        .then((result) => {
-            res.status(200).json(result);
-        })
-        .catch((error) => {
-            res.status(500).json(error)
-        })
+app.post('/items', async (req, res) => {
+  const newItem = new Item(req.body);
+  try {
+    const savedItem = await newItem.save();
+    res.json(savedItem);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
-app.post("/addBasket", async (req, res) => {
-    const basket = req.body
-    const newItem = new BasketModel(basket);
-    await newItem.save();
-
-    res.json(basket);
-
+app.put('/items/:id', async (req, res) => {
+  try {
+    const updatedItem = await Item.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    res.json(updatedItem);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
-io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket.id}`);
-
-  socket.on("join_room", (data) => {
-    socket.join(data);
-  });
-
-  socket.on("send_message", (data) => {
-    socket.to(data.room).emit("receive_message", data);
-  });
+app.delete('/items/:id', async (req, res) => {
+  try {
+    const deletedItem = await Item.findByIdAndDelete(req.params.id);
+    res.json(deletedItem);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 });
 
-server.listen(3001, () => {
-  console.log("SERVER IS RUNNING");
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
+
 
 
 

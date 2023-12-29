@@ -17,7 +17,7 @@ function Navbar() {
             <img className='logo'src={image}></img>
         </div>
         <ul className="nav-menu">
-            <li><Link to="/">Home</Link></li>
+            <li><Link to="/Home">Home</Link></li>
             <li><Link to="/Item">Products</Link></li>
             <li><Link to="/Contact">Contact Us</Link></li>
         </ul>
@@ -32,9 +32,10 @@ function Navbar() {
 
         <div className={nav ? 'mobile-menu active' : 'mobile-menu'}>
           <ul className="mobile-nav">
-            <li><Link to="/">Home</Link></li>
+            <li><Link to="/Home">Home</Link></li>
             <li><Link to="/Item">Products</Link></li>
             <li><Link to="/Contact">Contact Us</Link></li>
+            <li><Link to="/Basket">Basket</Link></li>
           </ul>
           <div>
             <div className="mobile-menu-bottom">

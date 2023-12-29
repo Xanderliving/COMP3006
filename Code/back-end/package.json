@@ -1,8 +1,9 @@
 {
-  "name": "cocktail-crafters-server",
+  "name": "back-end",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon index.js"
@@ -15,7 +16,7 @@
     "express": "^4.18.2",
     "express-ws": "^5.0.2",
     "http": "^0.0.1-security",
-    "mongoose": "^8.0.2",
+    "mongoose": "^8.0.3",
     "nodemon": "^3.0.2",
     "socket.io": "^4.7.2",
     "websocket": "^1.0.34"

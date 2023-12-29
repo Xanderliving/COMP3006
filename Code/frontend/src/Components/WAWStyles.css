@@ -1,5 +1,5 @@
 .Wawbg{
-    background-color: rgb(255, 217, 193);
+    background-color: #c7f0c9;
     height: 300px;
     width: 100%;
     margin-top: -1px;
@@ -18,12 +18,12 @@
 .title{
     text-align: center;
     font-size: 50px;
-    color: azure;
+    color: black;
 }
 
 .Wawdesc {
     font-size: 30px;
-    color: azure;
+    color: black;
     position: flex;
     margin-left: 300px;
     margin-top: 40px;

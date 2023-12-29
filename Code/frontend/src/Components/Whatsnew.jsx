@@ -6,7 +6,7 @@ import Axios from 'axios';
 function Whatsnew() {
   const [listofItems, setListOfItems] = useState([]);
   useEffect(() => {
-    Axios.get("http://localhost:3001/getDrinks").then((response) => {
+    Axios.get("http://localhost:3001/items").then((response) => {
       setListOfItems(response.data);
           });
   }, []);

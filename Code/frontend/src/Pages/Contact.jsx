@@ -3,56 +3,67 @@ import "./contact.css";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
 
-const socket = io.connect("http://localhost:3001");
+const Contact = () => {
+  const [messages, setMessages] = useState([]);
+  const [inputMessage, setInputMessage] = useState('');
+  const [socket, setSocket] = useState(null);
+  const [username, setUsername] = useState('');
 
-function Contact() {
-  //Room State
-  const [room, setRoom] = useState("");
+  useEffect(() => {
+    const socket = io('http://localhost:3001');
 
-  // Messages States
-  const [message, setMessage] = useState("");
-  const [messageReceived, setMessageReceived] = useState("");
+    socket.on('connect', () => {
+      console.log('Connected to server');
+      setSocket(socket);
+    });
 
-  const joinRoom = () => {
-    if (room !== "") {
-      socket.emit("join_room", room);
+    socket.on('message', (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    return () => {
+      if (socket) {
+        socket.disconnect();
+      }
+    };
+  }, []);
+
+  const sendMessage = () => {
+    if (socket && inputMessage.trim() !== '') {
+      socket.emit('message', { text: inputMessage, username });
+      setInputMessage('');
     }
   };
 
-  const sendMessage = () => {
-    socket.emit("send_message", { message, room });
-  };
-
-  useEffect(() => {
-    socket.on("receive_message", (data) => {
-      setMessageReceived(data.message);
-    });
-  }, [socket]);
   return (
-    <div className="App">
     <div>
       <Navbar />
-    </div>
-    <div className="space">
-      <input
-        placeholder="Room Number..."
-        onChange={(event) => {
-          setRoom(event.target.value);
-        }}
-      />
-      <button onClick={joinRoom}> Join Room</button>
-      <input
-        placeholder="Message..."
-        onChange={(event) => {
-          setMessage(event.target.value);
-        }}
-      />
-      <button onClick={sendMessage}> Send Message</button>
-      <h1> Message:</h1>
-      {messageReceived}
+    <div className="chat-container">
+      <div className="message-container">
+        {messages.map((message, index) => (
+          <div key={index}>
+            <span>{message.timestamp}</span> - <span>{message.username}:</span> {message.text}
+          </div>
+        ))}
+      </div>
+      <div className="input-container">
+        <input
+          type="text"
+          value={inputMessage}
+          onChange={(e) => setInputMessage(e.target.value)}
+          placeholder="Type your message..."
+        />
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Your Name"
+        />
+        <button onClick={sendMessage}>Send</button>
+      </div>
     </div>
     </div>
   );
-}
+};
 
 export default Contact;

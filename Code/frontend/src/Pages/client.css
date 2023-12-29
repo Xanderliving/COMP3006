@@ -1,0 +1,23 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+  table, th, td {
+    border: 1px solid black;
+  }
+
+  th, td {
+    padding: 10px;
+    text-align: left;
+  }
+
+  button {
+    cursor: pointer;
+    padding: 5px 10px;
+    margin-right: 5px;
+  }
+.height{
+  margin-top: 80px;
+}
