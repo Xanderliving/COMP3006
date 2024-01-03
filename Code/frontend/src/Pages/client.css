@@ -21,3 +21,15 @@ table {
 .height{
   margin-top: 80px;
 }
+
+.input {
+  text-align: center;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #3498db;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
+}

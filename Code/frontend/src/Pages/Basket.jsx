@@ -1,79 +1,59 @@
 import './basket.css';
 import Navbar from "../Components/Navbar";
-import React from 'react'
-import { useState, useEffect } from 'react';
-
+import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
-function Basket(){
-    const [listofItems, setListOfItems] = useState([]);
-    const [items, setItems] = useState([]);
-    const drinkNameToDelete = 'Mojtio';
+const Client = ({ items, onDeleteItem }) => {
+  const [listofItems, setListOfItems] = useState([]);
+
+  useEffect(() => {
+    Axios.get(`http://localhost:3001/Basket/`).then((response) => {
+      setListOfItems(response.data);
+    });
+  }, []);;
 
 
-    useEffect(() => {
-      Axios.get(`http://localhost:3001/items`).then((response) => {
-        setListOfItems(response.data);
-            });
-    }, []);
 
-
-    const ItemList = () => {
-        const [items, setItems] = useState([]);
-      
-        useEffect(() => {
-          fetchData();
-        }, []);
-      
-        const fetchData = async () => {
-          try {
-            const response = await Axios.get('http://localhost:3001/items');
-            setItems(response.data);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };
-      
-        const handleDelete = async (itemId) => {
-          try {
-            await Axios.delete(`http://localhost:3001/items`);
-            setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
-          } catch (error) {
-            console.error('Error deleting item:', error);
-          }
-        };
-      
-        return (
-            <div>
-              <h1>Item List</h1>
-              <ul>
-                {items.map((item) => (
-                  <li key={item.id}>
-                    {item.name}
-                    <button onClick={() => handleDelete(item.id)}>Delete</button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          );
-        };
-
-      return(
-        <div className="format">
-        <Navbar />
-        <div class="product-container">
+  const handleUpdate = async (id, quantity) => {
+    try {
+      const response = await Axios.put(`http://localhost:3001/Basket/${id}`, {
+        Quantity: document.getElementById(quantity).value,
+      });
+      window.location.reload();
+      console.log('Updated', response.data);
+    } catch (error) {
+      console.error('Error updating item:', error);
+    }
     
-    </div>
-        <div>
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await Axios.delete(`http://localhost:3001/Basket/${id}`);
+      console.log('Deleted Item Response:', response.data);
+      onDeleteItem(id);
+    } catch (error) {
+      console.error('Error deleting item:', error);
+    }
+    window.location.reload();
+  };
+
+  return (
+    <div>
+    <Navbar/>
+    <div className="height">
+    <div>
         {listofItems.map((item) => {
             return (
                   <div class="product-card">
                   <div class="product-details">
                    <img class="product-image" src="https://via.placeholder.com/300" alt="Product 1" />
-                    <div class="product-title">{item.Item}</div>
-                    <div class="product-description">{item.Description}</div>
+                    <div class="product-title">{item.Name}</div>
+                    <div class="product-description">{item.Description}</div>   
                     <div class="product-price">£{item.Cost}</div>
-                    <button>Delete</button>
+                    <div>Quantity  <input type='number' id={item.Quantity}  placeholder={item.Quantity}></input></div>
+                    <button onClick={() => handleUpdate(item._id, item.Quantity)}>Update</button>
+                    <button onClick={() => handleDelete(item._id)}>Delete</button>
 
                   </div>
                   
@@ -81,15 +61,12 @@ function Basket(){
             );
           })}
           </div>
-        </div>
-    );
+    </div>
+    </div>
+  );
+};
 
-    
-}
-
-
-export default Basket;
+export default Client;
 
 
-    
-    
+

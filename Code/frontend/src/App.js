@@ -5,9 +5,11 @@ import Home from './Pages/Home';
 import Contact from './Pages/Contact';
 import Items from './Pages/Items';
 import Basket from './Pages/Basket';
-import Login from './Pages/login';
+import Login from './Pages/Login';
 import NoPage from './Pages/NoPage';
 import Client from './Pages/Client';
+import Create from './Pages/CreateAccount';
+import User from './Pages/User';
 import Axios from 'axios'
 
 export default function App() {
@@ -29,6 +31,8 @@ export default function App() {
             <Route path='/Contact' element={<Contact />} />
             <Route path='/Item' element={<Items />} />
             <Route path='/Basket' element={<Basket />} />
+            <Route path='/Create' element={<Create />} />
+            <Route path='/User' element={<User />} />
             <Route path='*' element={<NoPage />} />
           </Routes>
         </BrowserRouter>

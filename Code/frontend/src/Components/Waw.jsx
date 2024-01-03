@@ -6,9 +6,12 @@ import Image from '../Assests/Team.jpg'
 function Waw() {
   return (
     <div className='Wawbg'>
-      <div className='title'>Who Are We</div>
+      <br></br>
+      <div className='title'>Who Are We?</div>
          <img src={Image} className='WawPhoto' />
-         <div className='Wawdesc'>Here at Cocktail Crafters we create Mixologist level cocktails in takeawy cans so premium grade cocktails are in your fingertips whereever you are. We pride ourselves in the quality of our product.</div>
+         <div className='Wawdesc'><div className='Name'> Working with a team of our best Mixologist here at 'Cocktail Crafters' we have put together some of our favourite on the go premium cocktail</div>
+         <br></br>Great Quality and Great Tasting Cocktails at your Fingertips!'
+    </div>
     </div>
 
 

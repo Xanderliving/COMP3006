@@ -24,7 +24,7 @@ function Navbar() {
         <div className="nav-icons">
           <Link to="/Basket"><FaShoppingBasket size={30} className='icon' style={{marginRight: '1rem'}} /></Link>
 
-          <BsPerson className='icon' />
+          <Link to="/User"><BsPerson size={30} className='icon' style={{marginRight: '1rem'}}/></Link>
         </div>
         <div className="hamburger" onClick={handleNav}>
           <HiOutlineMenuAlt4 className='icon'/>
@@ -36,6 +36,7 @@ function Navbar() {
             <li><Link to="/Item">Products</Link></li>
             <li><Link to="/Contact">Contact Us</Link></li>
             <li><Link to="/Basket">Basket</Link></li>
+            <li><Link to="/User">Account</Link></li>
           </ul>
           <div>
             <div className="mobile-menu-bottom">

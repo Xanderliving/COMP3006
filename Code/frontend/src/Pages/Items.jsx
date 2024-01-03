@@ -7,8 +7,7 @@ import Axios from 'axios';
 
 function Items(){
     const [listofItems, setListOfItems] = useState([]);
-    const [Customer, setCustomer] = useState("");
-    const [Item, setItem] = useState("");
+    const [listofBaskets, setListOfBaskets] = useState([]);
 
     useEffect(() => {
       Axios.get(`http://localhost:3001/items/`).then((response) => {
@@ -16,19 +15,27 @@ function Items(){
             });
     }, []);
 
-    const createBasket = () => {
-      Axios.post("http://localhost:3001/addBasket/", {
-        Customer: "",
-        Item: "",
-      }).then((response) => {
-        setCustomer([
-          ...Customer,
-          {
-            Customer,
-            Item,
-          },
-        ]);
-      });
+    useEffect(() => {
+      Axios.get(`http://localhost:3001/Basket/`).then((response) => {
+        setListOfBaskets(response.data);
+            });
+    }, []);
+
+
+    const handlePost = async () => {
+      try {
+        const response = await Axios.post('http://localhost:3001/Basket/', {
+          Customer: "Bob",
+          Item: "Item",
+          Cost: 10,
+          Quantity: 1,
+        });
+  
+        console.log('Item posted successfully:', response.data);
+      } catch (error) {
+        console.error('Error posting item:', error);
+      }
+    
     };
 
     
@@ -44,12 +51,10 @@ function Items(){
                   <div class="product-card">
                   <div class="product-details">
                    <img class="product-image" src="https://via.placeholder.com/300" alt="Product 1" />
-                    <div class="product-title">{item.Name}</div>
-                    <div class="product-description">{item.Description}</div>
-                    <div class="product-price">£{item.Cost}</div>
-                    <input type="text" placeholder="Name..." onChange={(event) => {setCustomer(event.target.value);}}/>
-                    <input type="text" placeholder="Name..." onChange={(event) => {setItem(event.target.value);}}/>
-                    <button class="product-button" onClick={createBasket}>Add to Cart</button>
+                    <div class="product-title"value={item.Name} id="Name">{item.Name}</div>
+                    <div class="product-description"value={item.Description} id="Name">{item.Description}</div>
+                    <div class="product-price" value={item.Cost} id="Cost" >£{item.Cost}</div>
+                    <button class="product-button" onClick={() => handlePost()}>Add to Cart</button>
 
                   </div>
                   
@@ -61,11 +66,6 @@ function Items(){
     );
     
 }
-function add(){
-    
-}
+
 
 export default Items;
-
-    
-    

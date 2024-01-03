@@ -76,9 +76,9 @@ const Client = ({ items, onDeleteItem }) => {
         {listofItems.map((item) => (
           <tr key={item._id}>
             <td>{item._id}</td>
-            <td><input  type="text" id={item.Name} placeholder={item.Name} /></td>
-            <td><input  type="text" id={item.Description} placeholder={item.Description} /></td>
-            <td><input type="text" id={item.Cost} placeholder={item.Cost} /></td>
+            <td><input  className='input' type="text" id={item.Name} placeholder={item.Name} required/></td>
+            <td><input  className='input' type="text" id={item.Description} placeholder={item.Description} required/></td>
+            <td><input  className='input' type="text" id={item.Cost} placeholder={item.Cost} required /></td>
             <td>
               <button onClick={() => handleUpdate(item._id, item.Name, item.Description, item.Cost)}>Update</button>
               <button onClick={() => handleDelete(item._id)}>Delete</button>
@@ -97,10 +97,10 @@ const Client = ({ items, onDeleteItem }) => {
           <th>Cost</th>
         </tr>
         <tr>
-          <td><input id="Create1" type="text"  placeholder="Name" /></td>
-          <td><input id="Create2" type="text" placeholder="Description" /></td>
-          <td><input id="Create3" type="text"  placeholder="Cost" /></td>
-          <button onClick={() => handlePost()}>Create</button>
+          <td><input className='input' id="Create1" type="text"  placeholder="Name" /></td>
+          <td><input className='input' id="Create2" type="text" placeholder="Description" /></td>
+          <td><input className='input' id="Create3" type="text"  placeholder="Cost" /></td>
+          <td><button onClick={() => handlePost()}>Create</button></td>
         </tr>
       </thead>
     </table>

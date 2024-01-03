@@ -1,7 +1,7 @@
 import React from 'react'
 import './HeroStyles.css'
 
-import Video from '../Assests/Drink_pour.mp4'
+import Video from '../Assests/Drink.mp4'
 
 function Hero() {
   return (

@@ -1,0 +1,60 @@
+/* LoginPage.css */
+.login-page {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .logo-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0; /* Adjust the background color as needed */
+  }
+  
+  .logo-container img {
+    max-width: 80%; /* Adjust the size of the logo as needed */
+  }
+  
+  .login-form-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  form {
+    width: 100%;
+    max-width: 300px;
+    text-align: center;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+  }
+  
+  button {
+    background-color: #4caf50; /* Adjust the button color as needed */
+    color: #fff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  p {
+    margin-top: 16px;
+  }
+  

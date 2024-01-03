@@ -3,67 +3,63 @@ import "./contact.css";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
 
-const Contact = () => {
+
+const socket = io('http://localhost:3002'); // Replace with your server URL
+
+function Contact() {
   const [messages, setMessages] = useState([]);
-  const [inputMessage, setInputMessage] = useState('');
-  const [socket, setSocket] = useState(null);
+  const [newMessage, setNewMessage] = useState('');
   const [username, setUsername] = useState('');
 
   useEffect(() => {
-    const socket = io('http://localhost:3001');
-
-    socket.on('connect', () => {
-      console.log('Connected to server');
-      setSocket(socket);
+    // Listen for incoming messages
+    socket.on('chat message', (msg) => {
+      setMessages((prevMessages) => [...prevMessages, msg]);
     });
 
-    socket.on('message', (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-    });
-
+    // Clean up the socket connection on component unmount
     return () => {
-      if (socket) {
-        socket.disconnect();
-      }
+      socket.disconnect();
     };
   }, []);
 
-  const sendMessage = () => {
-    if (socket && inputMessage.trim() !== '') {
-      socket.emit('message', { text: inputMessage, username });
-      setInputMessage('');
+  const handleSendMessage = () => {
+    if (newMessage.trim() !== '' && username.trim() !== '') {
+      // Send the message to the server along with the username
+      socket.emit('chat message', `${username}: ${newMessage}`);
+
+      // Clear the input fields
+      setNewMessage('');
+      setUsername('');
     }
   };
 
   return (
     <div>
-      <Navbar />
-    <div className="chat-container">
-      <div className="message-container">
-        {messages.map((message, index) => (
-          <div key={index}>
-            <span>{message.timestamp}</span> - <span>{message.username}:</span> {message.text}
-          </div>
-        ))}
+      <div>
+        <ul>
+          {messages.map((msg, index) => (
+            <li key={index}>{msg}</li>
+          ))}
+        </ul>
       </div>
-      <div className="input-container">
+      <div>
         <input
           type="text"
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
-          placeholder="Type your message..."
-        />
-        <input
-          type="text"
+          placeholder="Enter your name..."
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          placeholder="Your Name"
         />
-        <button onClick={sendMessage}>Send</button>
+        <input
+          type="text"
+          placeholder="Enter your message..."
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
+        />
+        <button onClick={handleSendMessage}>Send</button>
       </div>
     </div>
-    </div>
   );
-};
+}
 
 export default Contact;
