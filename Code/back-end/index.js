@@ -1,3 +1,4 @@
+
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
@@ -6,38 +7,9 @@ const cors = require('cors');
 const PORT = 3001;
 app.use(cors());
 app.use(bodyParser.json());
-const http = require("http");
-const { Server } = require("socket.io");
 app.use(express.json());
 
 
-const server = http.createServer(app);
-
-const io = new Server(server, {
-  cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"],
-  },
-});
-
-io.on('connection', (socket) => {
-  console.log('A user connected');
-
-  // Listen for incoming messages
-  socket.on('chat message', (msg) => {
-    // Broadcast the message to all connected clients
-    io.emit('chat message', msg);
-  });
-
-  // Listen for disconnection
-  socket.on('disconnect', () => {
-    console.log('User disconnected');
-  });
-});
-
-server.listen(3002, () => {
-  console.log("SERVER IS RUNNING");
-});
 
 mongoose.connect("mongodb+srv://alexw123456w:JFeU7ne3L4adSigl@cluster0.2gorhjl.mongodb.net/Drinksdb", {
   useNewUrlParser: true,
@@ -174,6 +146,25 @@ app.get('/User', async (req, res) => {
   }
 });
 
+app.get('/User/:email/:password', async (req, res) => {
+  const userEmail = req.params.email;
+  const userPass = req.params.password;
+
+  try {
+    const user = await User.findOne({ Email: userEmail, Password: userPass });
+    
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    const { Email, Password } = user;
+    res.json({ Email, Password });
+  } catch (error) {
+    console.error('Error retrieving user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 app.post('/User', async (req, res) => {
   const newUser = new User(req.body);
   try {
@@ -185,13 +176,21 @@ app.post('/User', async (req, res) => {
   }
 });
 
-app.put('/User/:id', async (req, res) => {
+app.put('/User/:Email', async (req, res) => {
+  const userEmail = req.params.Email;
+
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
+    // Find the user by email and update their information
+    const updatedUser = await User.findOneAndUpdate(
+      { Email: userEmail },
       req.body,
       { new: true }
     );
+
+    if (!updatedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
     res.json(updatedUser);
   } catch (error) {
     console.error(error);
@@ -199,27 +198,54 @@ app.put('/User/:id', async (req, res) => {
   }
 });
 
-app.delete('/User/:id', async (req, res) => {
+app.delete('/User/:Email', async (req, res) => {
+  const userEmail = req.params.Email;
+
   try {
-    const deletedUser = await User.findByIdAndDelete(req.params.id);
-    res.json(deletedUser);
+    // Find the user by email and delete
+    const deletedUser = await User.findOneAndDelete({ Email: userEmail });
+
+    if (!deletedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json({ message: 'User deleted', deletedUser });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
+
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
-// server.js
+
+// Webchat;
+const http = require('http');
+const socketIO = require('socket.io');
+const server = http.createServer(app);
+const io = socketIO(server);
 
 
+app.use(cors());
+
+io.on('connection', (socket) => {
+  console.log(`User connected: ${socket.id}`);
+
+  socket.on('message', (message) => {
+    console.log(`Received message from ${socket.id}: ${message}`);
+    io.emit('message', message);
+  });
+
+  socket.on('disconnect', (reason) => {
+    console.log(`Socket disconnected: ${reason}`);
+  });
+});
 
 
-
-
-
-
-
+server.listen(3002, () => {
+  console.log(`Server is running on port 3002`);
+});

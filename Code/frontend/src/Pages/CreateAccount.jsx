@@ -46,10 +46,10 @@ const CreateAccount = () => {
         <h2>Create Account</h2>
         <forum>
           <label>Enter a username:</label>
-          <input id="Create2" type="text"  placeholder="Cost" required/>
+          <input id="Create2" type="text"  placeholder="Enter Username" required/>
 
           <label>Enter a password:</label>
-          <input id="Create3" type="password"  placeholder="Cost" required/>
+          <input id="Create3" type="password"  placeholder="Enter Password" required/>
 
           <button type="submit" onClick={() => handlePost()}>Create Account</button> <br></br>
         </forum>

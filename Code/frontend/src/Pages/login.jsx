@@ -2,35 +2,29 @@ import "./login.css"
 import Axios from 'axios';
 import image from '../Assests/logo.png'
 import { Link } from "react-router-dom";
-import { React ,useState, useEffect } from 'react';
+import { React, useState, useEffect } from 'react';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [Email, setUsername] = useState('');
+  const [Password, setPassword] = useState('');
+  const [usernameExists, setUsernameExists] = useState(false);
 
-  const handleLogin = async () => {
+
+  const handleUsername = async () => {
     try {
-      // Construct the URL with email and password as query parameters
-      const url = `http://localhost:3001/user`;
-
-      // Make a GET request to the server
-      const response = await fetch(url);
-
-      if (response.ok) {
-        const data = await response.json();
-        // Assuming you have a function to handle successful login, e.g., redirecting to another page
-        handleSuccessfulLogin(data);
-      } else {
-        // Handle authentication failure (e.g., show an error message)
-        console.error('Login failed');
-      }
+      const response = await Axios.get(`http://localhost:3001/user/${Email}/${Password}`);
+      console.log('Username exists:', response.data);
+      setUsernameExists(true);
+      window.location.href = '/Home';
     } catch (error) {
-      console.error('Error during login:', error);
+      alert('Username does not exist');
     }
+  }
+  const handleChange = (event) => {
+    setUsername(event.target.value);   
   };
-  const handleSuccessfulLogin = (data) => {
-    // Implement logic for successful login, e.g., redirect to another page
-    console.log('Login successful:', data);
+  const handlepChange = (event) => {
+    setPassword(event.target.value);   
   };
 
   return (
@@ -40,16 +34,17 @@ const Login = () => {
       </div>
       <div className="login-form-container">
         <h2>Login</h2>
-        <form>
-          <label>Username:</label>
-          <input type="text" id="input2" name="username" />
+        
+          <label>
+            Username:
+            <input type="text" value={Email} onChange={handleChange} />
+            Password:
+            <input type="text" value={Password} onChange={handlepChange} />
+          </label>
+          <button type="submit" onClick={handleUsername}> Login</button>
+       
+        <Link to="/Create">Dont have a account?</Link>
 
-          <label>Password:</label>
-          <input type="password" id="input2" name="password" />
-
-          <button type="submit" onClick={() => handleLogin()}>Login</button> <br></br>
-          <Link to="/Create">Dont have a account?</Link>
-        </form>
       </div>
     </div>
   );

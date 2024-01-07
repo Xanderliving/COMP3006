@@ -48,7 +48,7 @@ const Client = ({ items, onDeleteItem }) => {
                   <div class="product-card">
                   <div class="product-details">
                    <img class="product-image" src="https://via.placeholder.com/300" alt="Product 1" />
-                    <div class="product-title">{item.Name}</div>
+                    <div class="product-title">{item.Item}</div>
                     <div class="product-description">{item.Description}</div>   
                     <div class="product-price">£{item.Cost}</div>
                     <div>Quantity  <input type='number' id={item.Quantity}  placeholder={item.Quantity}></input></div>

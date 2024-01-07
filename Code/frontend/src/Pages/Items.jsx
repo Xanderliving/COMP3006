@@ -22,13 +22,14 @@ function Items(){
     }, []);
 
 
-    const handlePost = async () => {
+    const handlePost = async (id, name, description, cost) => {
       try {
         const response = await Axios.post('http://localhost:3001/Basket/', {
           Customer: "Bob",
-          Item: "Item",
-          Cost: 10,
+          Item: name,
+          Cost: cost,
           Quantity: 1,
+
         });
   
         console.log('Item posted successfully:', response.data);
@@ -51,10 +52,10 @@ function Items(){
                   <div class="product-card">
                   <div class="product-details">
                    <img class="product-image" src="https://via.placeholder.com/300" alt="Product 1" />
-                    <div class="product-title"value={item.Name} id="Name">{item.Name}</div>
-                    <div class="product-description"value={item.Description} id="Name">{item.Description}</div>
-                    <div class="product-price" value={item.Cost} id="Cost" >£{item.Cost}</div>
-                    <button class="product-button" onClick={() => handlePost()}>Add to Cart</button>
+                    <div class="product-title"value={item.Name} id={item.Name}>{item.Name}</div>
+                    <div class="product-description" value={item.Description} id="Name">{item.Description}</div>
+                    <div class="product-price" value={item.Cost} id={item.Cost} >£{item.Cost}</div>
+                    <button class="product-button" onClick={() => handlePost(item._id, item.Name, item.Description, item.Cost)}>Add to Cart</button>
 
                   </div>
                   
