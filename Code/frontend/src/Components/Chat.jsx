@@ -11,7 +11,7 @@ const Chat = () => {
 
     const socket = io('http://localhost:3002', {
         reconnection: true,
-        //reconnectionAttempts: 3, // Adjust as needed
+        reconnectionAttempts: 3, // Adjust as needed
         transports: ['websocket'],
         upgrade: false,  // Set this option to avoid CORS issues
 
@@ -31,6 +31,11 @@ const Chat = () => {
         socket.emit('message', message);
         setMessage('');
     };
+    
+    socket.on('message', (message) => {
+    console.log(`Received message: ${message}`);
+   
+    });
 
     return (
         <div>
