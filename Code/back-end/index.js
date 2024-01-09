@@ -224,24 +224,22 @@ app.listen(PORT, () => {
 
 
 // Webchat;
-const http = require('http');
-const socketIO = require('socket.io');
-const server = http.createServer(app);
-const io = socketIO(server);
-
-
-app.use(cors());
+const server = require("http").createServer();
+const io = require("socket.io")(server, {
+  transports: ["websocket", "polling"]
+});
 
 io.on('connection', (socket) => {
-  console.log(`User connected: ${socket.id}`);
+  console.log('A user connected');
 
   socket.on('message', (message) => {
-    console.log(`Received message from ${socket.id}: ${message}`);
-    io.emit('message', message);
+    console.log('Message:', message);
+    // Exclude the sender's socket ID when emitting messages
+    socket.broadcast.emit('message', message);
   });
 
-  socket.on('disconnect', (reason) => {
-    console.log(`Socket disconnected: ${reason}`);
+  socket.on('disconnect', () => {
+    console.log('User disconnected');
   });
 });
 

@@ -1,61 +1,53 @@
-// src/Chat.js
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
 
+const socket = io('http://localhost:3002', {
+    transports: ['websocket'],
+    upgrade: false,  // Set this option to avoid CORS issues
+});
 
-
-const Chat = () => {
-
-    const [message, setMessage] = useState('');
+function App() {
     const [messages, setMessages] = useState([]);
-
-    const socket = io('http://localhost:3002', {
-        reconnection: true,
-        reconnectionAttempts: 3, // Adjust as needed
-        transports: ['websocket'],
-        upgrade: false,  // Set this option to avoid CORS issues
-
-    });
+    const [messageInput, setMessageInput] = useState('');
 
     useEffect(() => {
         socket.on('message', (message) => {
-            setMessages([...messages, message]);
+          setMessages((prevMessages) => [...prevMessages, message]);
         });
-
         return () => {
-            socket.disconnect();
+          socket.off('message');
         };
-    }, [messages]);
+      }, []);
 
     const sendMessage = () => {
-        socket.emit('message', message);
-        setMessage('');
+        if (messageInput.trim() !== '') {
+            socket.emit('message', { text: messageInput });
+            setMessageInput('');
+        }
     };
-    
-    socket.on('message', (message) => {
-    console.log(`Received message: ${message}`);
-   
-    });
 
     return (
         <div>
             <div>
-                <ul>
+                <h2>Chat Room</h2>
+                <div style={{ border: '1px solid #ccc', padding: '10px', minHeight: '200px', marginBottom: '10px' }}>
                     {messages.map((msg, index) => (
-                        <li key={index}>{msg}</li>
+                        <div key={index}>{msg.text}</div>
                     ))}
-                </ul>
-            </div>
-            <div>
-                <input
-                    type="text"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                />
-                <button onClick={sendMessage}>Send</button>
+                </div>
+                <div>
+                    <input
+                        type="text"
+                        value={messageInput}
+                        onChange={(e) => setMessageInput(e.target.value)}
+                        placeholder="Type your message..."
+                    />
+                    <button onClick={sendMessage}>Send</button>
+                </div>
             </div>
         </div>
     );
-};
+}
 
-export default Chat;
+export default App;
+

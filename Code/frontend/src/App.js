@@ -24,7 +24,8 @@ export default function App() {
 
   return(
     
-    <div>
+    <div className="App">
+        
         <BrowserRouter>
           <Routes>
             <Route index element={<Login />} />
@@ -39,7 +40,9 @@ export default function App() {
           </Routes>
         </BrowserRouter>
       
-    
+        <h1> Welcome to the Store </h1>
     </div>
+    
   )
+  
 }
