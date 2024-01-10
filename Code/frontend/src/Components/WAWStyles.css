@@ -37,6 +37,7 @@
     font-family:'Brush Script MT';
     font-style: initial;
 }
+/* For mobile phones: */
 @media screen and (max-width: 940px){
     .Wawdesc {
         font-size: 20px;

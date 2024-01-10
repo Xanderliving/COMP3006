@@ -26,7 +26,7 @@ header {
 }
 
 .product-card {
-  flex: 0 0 calc(20% - 40px); /* 25% width with 40px margin */
+  flex: 0 0 calc(20% - 40px); 
   background-color: #fff;
   border-radius: 8px;
   margin: 20px;

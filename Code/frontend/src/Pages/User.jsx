@@ -12,6 +12,7 @@ function User() {
         const [usernameExists, setUsernameExists] = useState(false);
 
 
+        //Gets user input and checks if the user exists
         const handleUsername = async () => {
                 try {
                         const response = await Axios.get(`http://localhost:3001/user/${Email}/${Password}`);
@@ -23,17 +24,20 @@ function User() {
                         setShowNewPassword(false);
                 }
         }
+        //Gets user input and sets it to the state
         const handleChange = (event) => {
                 setUsername(event.target.value);
         };
+        //Gets user input and sets it to the state
         const handlepChange = (event) => {
                 setPassword(event.target.value);
         };
-
+        //Gets user input and sets it to the state
         const handleNewPasswordChange = (event) => {
                 setNewPassword(event.target.value);
         };
 
+        //Updates the user in the database
         const handleUpdate = async () => {
                 try {
                         const response = await Axios.put(`http://localhost:3001/user/${Email}`, {
@@ -47,6 +51,7 @@ function User() {
                 }
 
         };
+        //Deletes the user in the database
         const handleDelete = async () => {
                 try {
                   const response = await Axios.delete(`http://localhost:3001/User/${Email}`);
@@ -66,7 +71,7 @@ function User() {
                         
                         <div className="user-editing-page">
                                 <h1>User Editing Page</h1>
-
+                                {/*Gets user input*/}
                                 <label>
                                         Username:
                                         <input type="text" id='Emails' value={Email} onChange={handleChange} />
@@ -77,6 +82,7 @@ function User() {
                                         <input type="Password" value={Password} onChange={handlepChange} />
                                 </label>
                                 <br />
+                                {/*if user info is correct, opens up change password section*/}
                                 <button type="submit" onClick={handleUsername}>Submit</button>
 
                                 {showNewPassword && (

@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 
 const Client = ({ items, onDeleteItem }) => {
+  //Gets all items from the database
   const [listofItems, setListOfItems] = useState([]);
-
   useEffect(() => {
     Axios.get(`http://localhost:3001/items/`).then((response) => {
       setListOfItems(response.data);
@@ -13,7 +13,7 @@ const Client = ({ items, onDeleteItem }) => {
   }, []);;
 
 
-
+  //Updates the item in the database
   const handleUpdate = async (id, name, description, cost) => {
     try {
       const response = await Axios.put(`http://localhost:3001/items/${id}`, {
@@ -29,6 +29,7 @@ const Client = ({ items, onDeleteItem }) => {
     
   };
 
+  //Deletes the item in the database
   const handleDelete = async (id) => {
     try {
       const response = await Axios.delete(`http://localhost:3001/items/${id}`);
@@ -40,6 +41,7 @@ const Client = ({ items, onDeleteItem }) => {
     window.location.reload();
   };
 
+  //Posts the item to the database
   const handlePost = async () => {
     try {
       const response = await Axios.post('http://localhost:3001/items/', {
@@ -73,6 +75,7 @@ const Client = ({ items, onDeleteItem }) => {
         </tr>
       </thead>
       <tbody>
+          {/*Displays items on page */}
         {listofItems.map((item) => (
           <tr key={item._id}>
             <td>{item._id}</td>
@@ -97,6 +100,7 @@ const Client = ({ items, onDeleteItem }) => {
           <th>Cost</th>
         </tr>
         <tr>
+            {/*Gathers data needed to put on database*/}
           <td><input className='input' id="Create1" type="text"  placeholder="Name" /></td>
           <td><input className='input' id="Create2" type="text" placeholder="Description" /></td>
           <td><input className='input' id="Create3" type="text"  placeholder="Cost" /></td>

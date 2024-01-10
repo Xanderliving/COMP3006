@@ -16,6 +16,7 @@ mongoose.connect("mongodb+srv://alexw123456w:JFeU7ne3L4adSigl@cluster0.2gorhjl.m
   useUnifiedTopology: true,
 });
 
+//Models of databases
 const Schema = mongoose.Schema;
 const itemSchema = new Schema({
   Name: String,
@@ -42,6 +43,7 @@ const UserSchema = new Schema({
 const User = mongoose.model('User', UserSchema);
 
 
+//Item Crud for server side
 app.get('/items', async (req, res) => {
   try {
     const items = await Item.find();
@@ -87,8 +89,7 @@ app.delete('/items/:id', async (req, res) => {
   }
 });
 
-//For Basket
-
+//Basket Crud for server side
 app.get('/Basket', async (req, res) => {
   try {
     const basket = await Basket.find();
@@ -134,8 +135,7 @@ app.delete('/Basket/:id', async (req, res) => {
   }
 });
 
-//For User
-
+//User Crud for server side
 app.get('/User', async (req, res) => {
   try {
     const user = await User.find();
@@ -180,7 +180,6 @@ app.put('/User/:Email', async (req, res) => {
   const userEmail = req.params.Email;
 
   try {
-    // Find the user by email and update their information
     const updatedUser = await User.findOneAndUpdate(
       { Email: userEmail },
       req.body,
@@ -202,7 +201,6 @@ app.delete('/User/:Email', async (req, res) => {
   const userEmail = req.params.Email;
 
   try {
-    // Find the user by email and delete
     const deletedUser = await User.findOneAndDelete({ Email: userEmail });
 
     if (!deletedUser) {
@@ -217,13 +215,13 @@ app.delete('/User/:Email', async (req, res) => {
 });
 
 
-
+//Ends port connection 3001
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 
-// Webchat;
+// Websocket for live webchat
 const server = require("http").createServer();
 const io = require("socket.io")(server, {
   transports: ["websocket", "polling"]
@@ -234,7 +232,6 @@ io.on('connection', (socket) => {
 
   socket.on('message', (message) => {
     console.log('Message:', message);
-    // Exclude the sender's socket ID when emitting messages
     socket.broadcast.emit('message', message);
   });
 
@@ -243,7 +240,7 @@ io.on('connection', (socket) => {
   });
 });
 
-
+//Ends port connection 3002
 server.listen(3002, () => {
   console.log(`Server is running on port 3002`);
 });

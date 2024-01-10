@@ -25,7 +25,7 @@ export default function App() {
   return(
     
     <div className="App">
-        
+        {/*Links to all the pages including a page not found*/}
         <BrowserRouter>
           <Routes>
             <Route index element={<Login />} />

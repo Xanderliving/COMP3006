@@ -9,12 +9,14 @@ function Items(){
     const [listofItems, setListOfItems] = useState([]);
     const [listofBaskets, setListOfBaskets] = useState([]);
 
+    //Gets all items from the database
     useEffect(() => {
       Axios.get(`http://localhost:3001/items/`).then((response) => {
         setListOfItems(response.data);
             });
     }, []);
 
+    //Gets all basket items from the database
     useEffect(() => {
       Axios.get(`http://localhost:3001/Basket/`).then((response) => {
         setListOfBaskets(response.data);
@@ -22,6 +24,7 @@ function Items(){
     }, []);
 
 
+    //Posts the items into the basket to the database
     const handlePost = async (id, name, description, cost) => {
       try {
         const response = await Axios.post('http://localhost:3001/Basket/', {
@@ -49,7 +52,9 @@ function Items(){
         <div>
         {listofItems.map((item) => {
             return (
+              
                   <div class="product-card">
+                    {/*Displays items*/}
                   <div class="product-details">
                    <img class="product-image" src="https://via.placeholder.com/300" alt="Product 1" />
                     <div class="product-title"value={item.Name} id={item.Name}>{item.Name}</div>

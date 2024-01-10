@@ -42,13 +42,14 @@ ul {
 }
 
 li a:visited {
-    color: inherit; /* Use the default text color */
-    text-decoration: none; /* Remove underline for visited links */
+    color: inherit; 
+    text-decoration: none; 
 }
   a:visited {
-    color: inherit; /* Use the default text color */
+    color: inherit; 
   }
 
+/* For mobile phones: */
 @media screen and (max-width: 940px){
     .mobile-menu{
         display: flex;

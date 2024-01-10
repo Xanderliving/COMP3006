@@ -6,6 +6,7 @@ import Axios from 'axios';
 const Client = ({ items, onDeleteItem }) => {
   const [listofItems, setListOfItems] = useState([]);
 
+  /*Get basket json*/
   useEffect(() => {
     Axios.get(`http://localhost:3001/Basket/`).then((response) => {
       setListOfItems(response.data);
@@ -13,7 +14,7 @@ const Client = ({ items, onDeleteItem }) => {
   }, []);;
 
 
-
+  /*Update basket json*/
   const handleUpdate = async (id, quantity) => {
     try {
       const response = await Axios.put(`http://localhost:3001/Basket/${id}`, {
@@ -26,7 +27,7 @@ const Client = ({ items, onDeleteItem }) => {
     }
     
   };
-
+  /*Delete basket json*/
   const handleDelete = async (id) => {
     try {
       const response = await Axios.delete(`http://localhost:3001/Basket/${id}`);
@@ -45,7 +46,9 @@ const Client = ({ items, onDeleteItem }) => {
     <div>
         {listofItems.map((item) => {
             return (
+            
                   <div class="product-card">
+                    {/*Display images */}
                   <div class="product-details">
                    <img class="product-image" src="https://via.placeholder.com/300" alt="Product 1" />
                     <div class="product-title">{item.Item}</div>

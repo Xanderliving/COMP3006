@@ -8,7 +8,8 @@ function Waw() {
     <div className='Wawbg'>
       <br></br>
       <div className='title'>Who Are We?</div>
-         <img src={Image} className='WawPhoto' />
+      {/*Description of company*/}
+         <img src={Image} alt='Hi' className='WawPhoto' />
          <div className='Wawdesc'><div className='Name'> Working with a team of our best Mixologist here at 'Cocktail Crafters' we have put together some of our favourite on the go premium cocktail</div>
          <br></br>Great Quality and Great Tasting Cocktails at your Fingertips!'
     </div>
