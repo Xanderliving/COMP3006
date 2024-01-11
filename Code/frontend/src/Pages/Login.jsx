@@ -43,7 +43,7 @@ const Login = () => {
             Username:
             <input type="text" value={Email} onChange={handleChange} />
             Password:
-            <input type="text" value={Password} onChange={handlepChange} />
+            <input type="password" value={Password} onChange={handlepChange} />
           </label>
           <button type="submit" onClick={handleUsername}> Login</button>
        {/*Redirects to new page if they want to make a account*/}

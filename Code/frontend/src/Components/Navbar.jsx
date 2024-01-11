@@ -13,7 +13,7 @@ function Navbar() {
   return (
     <div className={nav ? 'navbar navbar-bg' : 'navbar'}>
         <div className="logo">
-            <img className='logo' alt='hI' ssrc={image}></img>
+            <img className='logo' src={image}></img>
         </div>
           {/*Set links for main navbar*/}
         <ul className="nav-menu">
