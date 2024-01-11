@@ -20,12 +20,12 @@ jobs:
 
     - name: Install dependencies
       run: npm install
-      working-directory: comp3006/CODE/frontend
+      working-directory: /CODE/frontend
 
     - name: Build
       run: npm run build
-      working-directory: comp3006/code/frontend
+      working-directory: /code/frontend
 
     - name: Run tests
       run: npm test
-      working-directory: comp3006/code/frontend
+      working-directory: /code/frontend
