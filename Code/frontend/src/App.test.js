@@ -9,18 +9,19 @@ import Waw from "./Components/Waw";
 
 
 describe("Check Componants are active", () => {
-  test("Chat componant works", () => {
+
+  it("Chat componant works", () => {
     render(<Chat />);
     const Title = screen.getByText(/Chat Room/i);
     expect(Title).toBeInTheDocument();
   });
 
-  test("Video exists", () => {
+  it("Video exists", () => {
     render(<Hero />);
     const videoElement = screen.getByTestId('hero-video');
     expect(videoElement).toBeInTheDocument();
   });
-  test("Links Work", () => {
+  it("Links Work", () => {
     render(<MemoryRouter><Navbar /></MemoryRouter>);
 
     const homeLinks = screen.getAllByRole('link', { name: /home/i });
@@ -28,39 +29,39 @@ describe("Check Componants are active", () => {
     fireEvent.click(homeLink);
     expect(window.location.pathname).toBe('/');
   });
-  test("Description loads", () => {
+  it("Description loads", () => {
     render(<Waw />);
     const descriptionElement = screen.getByText(/Working with a team of our best Mixologist here at 'Cocktail Crafters' we have put together some of our favourite on the go premium cocktail/i); // Replace with your actual description text
     expect(descriptionElement).toBeInTheDocument();
   });
 });
-/*
+
 describe("Website links", () => {
-  test('Login Page', async () => {
+  it('Login Page', async () => {
     const response = await fetch('http://localhost:3000/');
     expect(response.status).toBe(200);
   });
-  test('Home Page', async () => {
+  it('Home Page', async () => {
     const response = await fetch('http://localhost:3000/Home');
     expect(response.status).toBe(200);
   });
-  test('Client Page', async () => {
+  it('Client Page', async () => {
     const response = await fetch('http://localhost:3000/Client');
     expect(response.status).toBe(200);
   });
-  test('Item Page', async () => {
+  it('Item Page', async () => {
     const response = await fetch('http://localhost:3000/Item');
     expect(response.status).toBe(200);
   });
-  test('User Page', async () => {
+  it('User Page', async () => {
     const response = await fetch('http://localhost:3000/User');
     expect(response.status).toBe(200);
   });
-  test('Create user Page', async () => {
+  it('Create user Page', async () => {
     const response = await fetch('http://localhost:3000/CreateUser');
     expect(response.status).toBe(200);
   });
-  test('Basket Page', async () => {
+  it('Basket Page', async () => {
     const response = await fetch('http://localhost:3000/Basket');
     expect(response.status).toBe(200);
   });
@@ -78,7 +79,7 @@ async function createItem(data) {
 }
 
 describe('Item Server Works', () => {
-  test('Item Server Works', async () => {
+  it('Item Server Works', async () => {
     const newItemData = {
       Name: "Test",
       Description: "Test",
@@ -95,11 +96,10 @@ describe('Item Server Works', () => {
 
   });
 
-  test('Edge case for items', async () => {
+  it('Edge case for items', async () => {
     const emptyData = {};
     const createdItem = await createItem(emptyData);
     expect(createdItem).toBeDefined();
     expect(createdItem._id).toBeDefined();
   });
 });
-*/
