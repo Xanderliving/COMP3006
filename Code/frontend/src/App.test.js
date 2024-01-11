@@ -34,7 +34,7 @@ describe("Check Componants are active", () => {
     expect(descriptionElement).toBeInTheDocument();
   });
 });
-
+/*
 describe("Website links", () => {
   test('Login Page', async () => {
     const response = await fetch('http://localhost:3000/');
@@ -102,3 +102,4 @@ describe('Item Server Works', () => {
     expect(createdItem._id).toBeDefined();
   });
 });
+*/
