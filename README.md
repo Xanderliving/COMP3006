@@ -21,12 +21,6 @@ To run tests, run the following command
   run test
 ```
 
-
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
-
 ## Tech Used
 
 **Client:** React, Axios, Chai, react-router-dom
@@ -62,7 +56,7 @@ Insert Youtube link
 
 #### Basket Schema
 ```http
-  /items
+  /Basket
 ```
 | Parameter | Type     |                
 | :-------- | :------- | 
