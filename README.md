@@ -1,8 +1,9 @@
 
 # Comp 3006 React
 
-This project is a website for the comapny 'Cocktail Crafters'. The website is a react and test driven code. The use of MongoDB online is used for the database.
-
+This project is a website for the comapny 'Cocktail Crafters'. The website is a react and test driven code. The use of MongoDB online is used for the database. <br>
+Youtube<br>
+https://youtu.be/DrWJ2N4fNpk?si=N5rOFESQjlx3s_vv
 ## Running the code
 
 There is 2 ways to run this code
@@ -21,6 +22,7 @@ On way is docker <br>
  In the command line "Frontend"
  ```bash
   npm install
+  npm install -force
   npm start
 ```
  In the command line "Backend"
