@@ -3,6 +3,33 @@
 
 This project is a website for the comapny 'Cocktail Crafters'. The website is a react and test driven code. The use of MongoDB online is used for the database.
 
+## Running the code
+
+There is 2 ways to run this code
+
+On way is docker <br>
+ -Download the file off github (make sure it is not on Onedrive)<br>
+ In the command line "Code"
+ ```bash
+  docker-compose build
+  docker-compsoe up
+```
+  And the code should work.
+  
+  The otherway is just off the system <br>
+   -Download the file off github (make sure it is not on Onedrive)<br>
+ In the command line "Frontend"
+ ```bash
+  npm install
+  npm start
+```
+ In the command line "Backend"
+ ```bash
+  npm install
+  npm start
+```
+  And the code should work.
+
 
 ## Features
 
